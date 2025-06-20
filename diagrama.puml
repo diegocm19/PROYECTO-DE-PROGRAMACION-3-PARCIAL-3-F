@@ -1,0 +1,67 @@
+@startuml
+class Juego {
+    - Tablero* tablero
+    - Jugador* jugador
+    - Renderizador* renderizador
+    + Juego(int filas, int columnas, int minas)
+    + ~Juego()
+    + iniciar()
+}
+
+class Tablero {
+    - int filas
+    - int columnas
+    - int minas
+    - std::vector<std::vector<Celda*>> celdas
+    + Tablero(int filas, int columnas, int minas)
+    + ~Tablero()
+    + revelarCelda(int fila, int columna)
+    + alternarBandera(int fila, int columna)
+    + esMina(int fila, int columna) const
+    + estaDespejado() const
+    + imprimirTablero(bool revelarTodo = false) const
+    + celdaEstaRevelada(int fila, int columna) const
+    + celdaEstaMarcada(int fila, int columna) const
+    + obtenerMinasAdyacentes(int fila, int columna) const
+}
+
+class Celda {
+    - bool tieneMina
+    - bool revelada
+    - bool marcada
+    - int minasAdyacentes
+    + Celda()
+    + ponerMina()
+    + obtenerMina() const
+    + revelar()
+    + estaRevelada() const
+    + alternarBandera()
+    + estaMarcada() const
+    + establecerMinasAdyacentes(int cantidad)
+    + obtenerMinasAdyacentes() const
+}
+
+class Jugador {
+    - int movimientos
+    + Jugador()
+    + incrementarMovimientos()
+    + obtenerMovimientos() const
+}
+
+class Renderizador {
+    + Renderizador()
+    + renderizar(const Tablero& tablero, bool revelarTodo = false) const
+    + mostrarMensaje(const char* mensaje) const
+}
+
+class VentanaSFML {
+    + ejecutarVentanaSFML()
+}
+
+Juego --> Tablero
+Juego --> Jugador
+Juego --> Renderizador
+Tablero --> Celda
+Renderizador --> Tablero
+
+@enduml
